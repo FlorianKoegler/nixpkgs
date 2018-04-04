@@ -11,7 +11,7 @@
 buildPythonPackage rec {
   pname = "ftfy";
 
-  version = "4.4.3";
+  version = "5.3.0";
   # ftfy v5 only supports python3. Since at the moment the only
   # packages that use ftfy are spacy and textacy which both support
   # python 2 and 3, they have pinned ftfy to the v4 branch.
@@ -20,7 +20,7 @@ buildPythonPackage rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "152xdb56rhs1q4r0ck1n557sbphw7zq18r75a7kkd159ckdnc01w";
+    sha256 = "0ba702d5138f9b35df32b55920c9466208608108f1f3d5de1a68c17e3d68cb7f";
   };
 
   propagatedBuildInputs = [ html5lib wcwidth ];

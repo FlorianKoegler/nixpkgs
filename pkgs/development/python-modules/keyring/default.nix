@@ -1,10 +1,8 @@
 { stdenv, buildPythonPackage, fetchPypi
-, secretstorage
-, fs, gdata, python_keyczar, pyasn1, pycrypto, six, setuptools_scm
-, mock, pytest, pytestrunner }:
+, setuptools_scm, entrypoints, secretstorage
+, pytest }:
 
 buildPythonPackage rec {
-  name = "${pname}-${version}";
   pname = "keyring";
   version = "12.0.0";
 
@@ -13,18 +11,21 @@ buildPythonPackage rec {
     sha256 = "fe8ae61626476c554af55036d48360b422a3d32c7c429a93f972219399987b38";
   };
 
-  buildInputs = [
-    fs gdata python_keyczar pyasn1 pycrypto six setuptools_scm
-  ];
+  # https://github.com/jaraco/keyring/issues/314
+  postPatch = ''
+    touch LICENSE
+  '';
 
-  checkInputs = [ mock pytest pytestrunner ];
+  nativeBuildInputs = [ setuptools_scm ];
 
-  propagatedBuildInputs = [ secretstorage ];
+  checkInputs = [ pytest ];
+
+  propagatedBuildInputs = [ entrypoints ] ++ stdenv.lib.optional stdenv.isLinux secretstorage;
 
   doCheck = !stdenv.isDarwin;
 
   checkPhase = ''
-    py.test $out
+    py.test
   '';
 
   meta = with stdenv.lib; {

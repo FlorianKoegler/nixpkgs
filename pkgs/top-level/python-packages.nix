@@ -7078,6 +7078,8 @@ in {
 
   keyutils = callPackage ../development/python-modules/keyutils { };
 
+  kiwisolver = callPackage ../development/python-modules/kiwisolver { };
+
   klein = callPackage ../development/python-modules/klein { };
 
   koji = callPackage ../development/python-modules/koji { };

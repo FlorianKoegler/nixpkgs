@@ -1,24 +1,19 @@
 { stdenv, buildPythonPackage, fetchPypi
 , setuptools_scm, entrypoints, secretstorage
-, pytest }:
+, pytest, pytest-flake8 }:
 
 buildPythonPackage rec {
   pname = "keyring";
-  version = "12.0.0";
+  version = "12.0.1";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "fe8ae61626476c554af55036d48360b422a3d32c7c429a93f972219399987b38";
+    sha256 = "846c9c709ee1203bac5444abec19b5228f4601377686f33cba672aa0ba313abd";
   };
-
-  # https://github.com/jaraco/keyring/issues/314
-  postPatch = ''
-    touch LICENSE
-  '';
 
   nativeBuildInputs = [ setuptools_scm ];
 
-  checkInputs = [ pytest ];
+  checkInputs = [ pytest pytest-flake8 ];
 
   propagatedBuildInputs = [ entrypoints ] ++ stdenv.lib.optional stdenv.isLinux secretstorage;
 
